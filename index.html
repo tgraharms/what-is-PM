@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PM Starter Kit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #eceff6;
+    --surface: #ffffff;
+    --ink: #14182b;
+    --ink-soft: #595f7a;
+    --ink-faint: #8a8fa6;
+    --line: #e0e4ee;
+    --line-soft: #eef1f7;
+    --accent: #4b3fe4;
+    --accent-wash: #eeecfe;
+
+    --s-discovery: #0d9488;
+    --s-define: #2563eb;
+    --s-design: #6366f1;
+    --s-build: #8b5cf6;
+    --s-test: #db2777;
+    --s-launch: #ea580c;
+    --s-measure: #16a34a;
+
+    --display: "Space Grotesk", system-ui, sans-serif;
+    --sans: "Inter", system-ui, sans-serif;
+    --mono: "Space Mono", ui-monospace, monospace;
+
+    --radius: 16px;
+    --shadow: 0 1px 2px rgba(20,24,43,.04), 0 8px 24px rgba(20,24,43,.06);
+    --shadow-lift: 0 2px 4px rgba(20,24,43,.06), 0 16px 40px rgba(20,24,43,.10);
+  }
+
+  * { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { animation: none !important; transition: none !important; }
+  }
+
+  body {
+    margin: 0;
+    font-family: var(--sans);
+    color: var(--ink);
+    background-color: var(--bg);
+    background-image: radial-gradient(circle at center, #d3d9e8 1px, transparent 1.4px);
+    background-size: 22px 22px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 22px; }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  /* ---------- Hero ---------- */
+  .hero { padding: 78px 0 56px; }
+  .hero h1 {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: clamp(38px, 7vw, 68px);
+    line-height: 1.02;
+    letter-spacing: -.02em;
+    margin: 18px 0 0;
+  }
+  .hero h1 .grad {
+    background: linear-gradient(96deg, var(--s-discovery), var(--s-design) 38%, var(--s-launch) 72%, var(--s-measure));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .hero p.lead {
+    font-size: clamp(16px, 2.3vw, 19px);
+    color: var(--ink-soft);
+    max-width: 560px;
+    margin: 22px 0 0;
+  }
+  .runner {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 28px;
+    padding: 9px 15px 9px 12px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    box-shadow: var(--shadow);
+    font-size: 13.5px;
+    color: var(--ink-soft);
+  }
+  .runner .tag {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .04em;
+    color: #fff;
+    background: var(--ink);
+    padding: 3px 8px;
+    border-radius: 6px;
+    text-transform: uppercase;
+  }
+  .runner b { color: var(--ink); font-weight: 600; }
+
+  /* ---------- Section scaffolding ---------- */
+  section { padding: 46px 0; }
+  .sec-head { margin-bottom: 30px; }
+  .sec-head h2 {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: clamp(26px, 4.2vw, 38px);
+    letter-spacing: -.015em;
+    margin: 10px 0 0;
+  }
+  .sec-head p { color: var(--ink-soft); max-width: 620px; margin: 12px 0 0; font-size: 15.5px; }
+
+  /* ---------- Callout ---------- */
+  .callout {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 14px;
+    align-items: start;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--accent);
+    border-radius: 12px;
+    padding: 16px 18px;
+    margin: 24px 0 6px;
+    font-size: 14.5px;
+    color: var(--ink-soft);
+    box-shadow: var(--shadow);
+  }
+  .callout .mark {
+    font-family: var(--mono);
+    font-weight: 700;
+    color: var(--accent);
+    font-size: 13px;
+    background: var(--accent-wash);
+    width: 26px; height: 26px;
+    display: grid; place-items: center;
+    border-radius: 7px;
+  }
+  .callout b { color: var(--ink); font-weight: 600; }
+
+  /* ---------- PDLC node strip ---------- */
+  .pipeline {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 8px 0 26px;
+    align-items: stretch;
+  }
+  .node {
+    flex: 1 1 120px;
+    min-width: 116px;
+    appearance: none;
+    text-align: left;
+    cursor: pointer;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 13px;
+    padding: 13px 13px 14px;
+    font-family: var(--sans);
+    color: var(--ink);
+    transition: transform .16s ease, box-shadow .16s ease, border-color .16s ease;
+    position: relative;
+    box-shadow: 0 1px 2px rgba(20,24,43,.04);
+  }
+  .node:hover { transform: translateY(-3px); box-shadow: var(--shadow-lift); }
+  .node:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .node .n-num {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-faint);
+    letter-spacing: .05em;
+  }
+  .node .n-dot {
+    width: 11px; height: 11px;
+    border-radius: 50%;
+    background: var(--c);
+    display: inline-block;
+    margin-left: 6px;
+    vertical-align: middle;
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--c) 18%, transparent);
+  }
+  .node .n-name {
+    display: block;
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 14.5px;
+    margin-top: 9px;
+    letter-spacing: -.01em;
+  }
+  .node[aria-selected="true"] {
+    border-color: var(--c);
+    box-shadow: 0 0 0 1px var(--c), var(--shadow);
+    background: color-mix(in srgb, var(--c) 6%, var(--surface));
+  }
+  .node[aria-selected="true"] .n-num { color: var(--c); }
+
+  .loop-back {
+    flex: 0 0 auto;
+    align-self: center;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-family: var(--mono);
+    font-size: 11.5px;
+    letter-spacing: .03em;
+    color: var(--s-measure);
+    background: color-mix(in srgb, var(--s-measure) 10%, var(--surface));
+    border: 1px dashed color-mix(in srgb, var(--s-measure) 45%, transparent);
+    border-radius: 999px;
+    padding: 8px 13px;
+  }
+  .loop-back svg { display: block; }
+
+  /* ---------- PDLC detail panel ---------- */
+  .detail {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-top: 4px solid var(--c, var(--accent));
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 26px 26px 28px;
+    animation: rise .28s ease;
+  }
+  @keyframes rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+  .detail .d-top { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .detail .d-step {
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 700;
+    color: #fff;
+    background: var(--c);
+    padding: 4px 9px;
+    border-radius: 7px;
+    letter-spacing: .04em;
+  }
+  .detail h3 {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: clamp(22px, 3.4vw, 28px);
+    letter-spacing: -.015em;
+    margin: 0;
+  }
+  .detail .d-what { font-size: 16px; color: var(--ink-soft); margin: 16px 0 22px; max-width: 640px; }
+
+  .d-meta { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line-soft); border-radius: 12px; overflow: hidden; border: 1px solid var(--line); }
+  .d-meta .cell { background: var(--surface); padding: 14px 16px; }
+  .d-meta .k {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    color: var(--ink-faint);
+  }
+  .d-meta .v { font-size: 14.5px; font-weight: 500; margin-top: 5px; }
+  .d-meta .v.deliv { color: var(--c); font-weight: 600; }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 7px; }
+  .chip {
+    font-size: 12.5px;
+    background: color-mix(in srgb, var(--c) 9%, var(--surface));
+    color: color-mix(in srgb, var(--c) 78%, var(--ink));
+    border: 1px solid color-mix(in srgb, var(--c) 22%, transparent);
+    border-radius: 7px;
+    padding: 4px 9px;
+    font-weight: 500;
+  }
+
+  .d-example {
+    margin-top: 22px;
+    background: color-mix(in srgb, var(--c) 5%, var(--surface));
+    border: 1px solid color-mix(in srgb, var(--c) 18%, transparent);
+    border-radius: 12px;
+    padding: 16px 18px;
+  }
+  .d-example .ex-label {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: var(--c);
+    font-weight: 700;
+  }
+  .d-example .ex-label .pin { width: 7px; height: 7px; border-radius: 50%; background: var(--c); }
+  .d-example p { margin: 9px 0 0; font-size: 14.5px; color: var(--ink); }
+
+  /* ---------- PM type cards ---------- */
+  .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  .pm {
+    appearance: none;
+    text-align: left;
+    font-family: var(--sans);
+    color: var(--ink);
+    cursor: pointer;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 20px 20px 18px;
+    box-shadow: var(--shadow);
+    transition: transform .16s ease, box-shadow .16s ease;
+  }
+  .pm:hover { transform: translateY(-3px); box-shadow: var(--shadow-lift); }
+  .pm:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .pm .pm-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+  .pm .pm-name { font-family: var(--display); font-weight: 700; font-size: 18px; letter-spacing: -.01em; }
+  .pm .pm-tick {
+    font-family: var(--mono); font-size: 10.5px; font-weight: 700;
+    letter-spacing: .05em; color: #fff; padding: 3px 7px; border-radius: 6px;
+  }
+  .pm .pm-focus { color: var(--ink-soft); font-size: 14px; margin: 11px 0 0; }
+  .pm .pm-toggle {
+    margin-top: 14px;
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: var(--mono); font-size: 11.5px; letter-spacing: .03em;
+    color: var(--accent);
+  }
+  .pm .pm-toggle .arr { transition: transform .2s ease; }
+  .pm[aria-expanded="true"] .pm-toggle .arr { transform: rotate(90deg); }
+  .pm .pm-body {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows .26s ease;
+    margin-top: 0;
+  }
+  .pm[aria-expanded="true"] .pm-body { grid-template-rows: 1fr; margin-top: 16px; }
+  .pm .pm-body > div { overflow: hidden; }
+  .pm .row { padding: 11px 0; border-top: 1px solid var(--line-soft); }
+  .pm .row:first-child { border-top: none; }
+  .pm .row .k { font-family: var(--mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: .09em; color: var(--ink-faint); }
+  .pm .row .v { font-size: 14px; margin-top: 4px; }
+  .pm .row .v.metric { font-weight: 600; }
+
+  /* ---------- Toolbox ---------- */
+  .tools { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .tool-row {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--c);
+    border-radius: 12px;
+    padding: 15px 17px;
+    box-shadow: var(--shadow);
+  }
+  .tool-row .tr-stage { font-family: var(--display); font-weight: 600; font-size: 15px; }
+  .tool-row .tr-job { font-size: 12.5px; color: var(--ink-faint); margin: 2px 0 11px; }
+
+  /* ---------- Glossary ---------- */
+  .glass-search {
+    width: 100%;
+    font-family: var(--sans);
+    font-size: 15px;
+    color: var(--ink);
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 11px;
+    padding: 13px 16px;
+    margin-bottom: 16px;
+    box-shadow: var(--shadow);
+  }
+  .glass-search:focus { outline: 2px solid var(--accent); outline-offset: 1px; border-color: transparent; }
+  .glossary { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .term {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 14px 16px;
+    box-shadow: 0 1px 2px rgba(20,24,43,.04);
+  }
+  .term .t-name { font-family: var(--mono); font-weight: 700; font-size: 13.5px; color: var(--accent); }
+  .term .t-full { font-size: 13px; color: var(--ink-faint); margin-top: 1px; }
+  .term .t-def { font-size: 13.5px; color: var(--ink-soft); margin-top: 7px; }
+  .no-match { grid-column: 1 / -1; text-align: center; color: var(--ink-faint); font-size: 14px; padding: 22px; }
+
+  /* ---------- Footer ---------- */
+  footer { padding: 40px 0 70px; }
+  .fnote {
+    background: var(--ink);
+    color: #d7daea;
+    border-radius: var(--radius);
+    padding: 30px 30px 32px;
+  }
+  .fnote .eyebrow { color: #a7a1f7; }
+  .fnote h3 { font-family: var(--display); font-weight: 700; font-size: 24px; color: #fff; margin: 12px 0 10px; letter-spacing: -.01em; }
+  .fnote p { font-size: 14.5px; max-width: 560px; margin: 0; }
+  .fnote .steps { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+  .fnote .step {
+    font-size: 13px; background: rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,.14);
+    border-radius: 9px; padding: 9px 13px;
+  }
+  .fnote .step span { font-family: var(--mono); color: #a7a1f7; margin-right: 7px; }
+
+  .credit { text-align: center; color: var(--ink-faint); font-size: 12px; margin-top: 26px; font-family: var(--mono); letter-spacing: .03em; }
+
+  /* ---------- Sample PRD ---------- */
+  .prd { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; }
+  .prd-bar {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+    padding: 13px 22px; background: var(--ink); color: #d7daea; font-family: var(--mono); font-size: 12px;
+  }
+  .prd-bar .file { color: #fff; letter-spacing: .03em; }
+  .prd-bar .meta { display: flex; gap: 13px; flex-wrap: wrap; align-items: center; color: #9ea3c0; }
+  .prd-bar .status { color: #3a2a05; background: #fbbf24; padding: 2px 8px; border-radius: 5px; font-weight: 700; letter-spacing: .04em; }
+  .prd-toggle-wrap { padding: 15px 22px 0; }
+  .prd-toggle {
+    appearance: none; cursor: pointer; font-family: var(--mono); font-size: 11.5px; letter-spacing: .03em;
+    color: var(--accent); background: var(--accent-wash); border: 1px solid color-mix(in srgb, var(--accent) 22%, transparent);
+    border-radius: 8px; padding: 7px 12px;
+  }
+  .prd-toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .prd-body { padding: 4px 22px 24px; }
+  .prd-sec { padding: 17px 0; border-top: 1px solid var(--line-soft); }
+  .prd-sec:first-child { border-top: none; }
+  .prd-sec .h { font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .1em; color: var(--ink-faint); margin-bottom: 9px; }
+  .prd-sec .h .num { color: var(--accent); }
+  .prd-sec p { margin: 0; font-size: 15px; color: var(--ink); }
+  .prd-sec p b, .prd-sec li b { font-weight: 600; }
+  .prd-sec ul { margin: 4px 0 0; padding-left: 18px; }
+  .prd-sec li { font-size: 14.5px; margin: 5px 0; color: var(--ink); }
+  .prd-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .prd-cols .in .h { color: var(--s-measure); }
+  .prd-cols .out .h { color: var(--s-test); }
+  .note {
+    display: none; margin-top: 11px; font-size: 13px; color: var(--accent);
+    background: var(--accent-wash); border-radius: 9px; padding: 9px 13px; border-left: 3px solid var(--accent);
+  }
+  .note b { color: var(--ink); font-weight: 600; }
+  .prd.show-notes .note { display: block; animation: rise .22s ease; }
+
+  /* ---------- Stakeholder hub ---------- */
+  .hub-center { text-align: center; margin: 0 auto 20px; max-width: 320px; background: var(--ink); color: #fff; border-radius: 14px; padding: 16px 20px; box-shadow: var(--shadow); position: relative; }
+  .hub-center .who { font-family: var(--display); font-weight: 700; font-size: 18px; letter-spacing: -.01em; }
+  .hub-center .sub { font-size: 12.5px; color: #aab0cf; margin-top: 3px; }
+  .hub { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .spoke { background: var(--surface); border: 1px solid var(--line); border-radius: 13px; padding: 15px 16px; box-shadow: var(--shadow); }
+  .spoke .role { font-family: var(--display); font-weight: 600; font-size: 15px; }
+  .spoke .line { font-size: 13px; margin-top: 10px; color: var(--ink-soft); line-height: 1.45; }
+  .spoke .line .lab { font-family: var(--mono); font-size: 10px; text-transform: uppercase; letter-spacing: .07em; color: var(--ink-faint); display: block; margin-bottom: 2px; }
+
+  /* ---------- Week ---------- */
+  .daily { display: flex; align-items: center; gap: 11px; flex-wrap: wrap; background: color-mix(in srgb, var(--accent) 8%, var(--surface)); border: 1px dashed color-mix(in srgb, var(--accent) 35%, transparent); border-radius: 11px; padding: 11px 15px; margin-bottom: 14px; font-size: 13.5px; color: var(--ink-soft); }
+  .daily .pill { font-family: var(--mono); font-size: 10.5px; font-weight: 700; letter-spacing: .04em; color: #fff; background: var(--accent); padding: 3px 9px; border-radius: 6px; text-transform: uppercase; }
+  .daily b { color: var(--ink); font-weight: 600; }
+  .week { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
+  .day { background: var(--surface); border: 1px solid var(--line); border-radius: 13px; padding: 14px 14px 16px; box-shadow: 0 1px 2px rgba(20,24,43,.04); }
+  .day .dname { font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 9px; }
+  .day .item { font-size: 13px; padding: 8px 0; border-top: 1px solid var(--line-soft); color: var(--ink); }
+  .day .item:first-of-type { border-top: none; }
+  .day .item .ritual { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--s-launch); margin-right: 8px; vertical-align: middle; }
+  .day .item.deep .ritual { background: var(--s-define); }
+  .week-key { display: flex; gap: 20px; flex-wrap: wrap; margin-top: 14px; font-size: 12.5px; color: var(--ink-soft); }
+  .week-key .k { display: inline-flex; align-items: center; gap: 7px; }
+  .week-key .dot { width: 8px; height: 8px; border-radius: 50%; }
+
+  /* ---------- Break in ---------- */
+  .breakin { display: grid; grid-template-columns: 1.05fr .95fr; gap: 16px; }
+  .paths { display: grid; gap: 10px; align-content: start; }
+  .path { background: var(--surface); border: 1px solid var(--line); border-left: 3px solid var(--accent); border-radius: 12px; padding: 13px 16px; box-shadow: 0 1px 2px rgba(20,24,43,.04); }
+  .path .pname { font-family: var(--display); font-weight: 600; font-size: 14.5px; }
+  .path .pdesc { font-size: 13px; color: var(--ink-soft); margin-top: 3px; }
+  .skills { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 20px 20px; box-shadow: var(--shadow); align-self: start; }
+  .skills h4 { font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .1em; color: var(--ink-faint); margin: 0 0 6px; }
+  .skills h4.soft { margin-top: 18px; }
+  .skill { width: 100%; appearance: none; background: none; border: none; text-align: left; font-family: var(--sans); color: var(--ink); display: flex; align-items: flex-start; gap: 11px; cursor: pointer; padding: 8px 0; font-size: 14px; }
+  .skill .box { flex: 0 0 auto; width: 18px; height: 18px; border: 1.5px solid var(--line); border-radius: 5px; margin-top: 1px; display: grid; place-items: center; transition: background .15s, border-color .15s; }
+  .skill .box svg { opacity: 0; transition: opacity .15s; }
+  .skill.on .box { background: var(--accent); border-color: var(--accent); }
+  .skill.on .box svg { opacity: 1; }
+  .skill.on .txt { color: var(--ink-faint); text-decoration: line-through; }
+  .skill:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+
+  /* ---------- Responsive (new sections) ---------- */
+  @media (max-width: 720px) {
+    .hub, .week { grid-template-columns: 1fr; }
+    .prd-cols, .breakin { grid-template-columns: 1fr; }
+    .prd-bar, .prd-toggle-wrap, .prd-body { padding-left: 18px; padding-right: 18px; }
+  }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 720px) {
+    .grid, .tools, .glossary { grid-template-columns: 1fr; }
+    .d-meta { grid-template-columns: 1fr; }
+    .node { flex: 1 1 100%; }
+    .loop-back { width: 100%; justify-content: center; }
+    .detail { padding: 22px 18px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <!-- HERO -->
+  <header class="hero">
+    <span class="eyebrow">PM Starter Kit</span>
+    <h1>Product management,<br><span class="grad">from zero.</span></h1>
+    <p class="lead">How a vague idea becomes something real, who does what along the way, and the tools they reach for. No experience assumed.</p>
+    <div class="runner">
+      <span class="tag">Follow along</span>
+      <span>We track one feature, <b>guest checkout</b>, the whole way through.</span>
+    </div>
+  </header>
+
+  <!-- PDLC -->
+  <section id="pdlc">
+    <div class="sec-head">
+      <span class="eyebrow">Part 1 / The process</span>
+      <h2>The product development life cycle</h2>
+      <p>Every product, big or small, moves through the same loop. Tap a stage to see what happens, what it produces, and how guest checkout moves through it.</p>
+    </div>
+
+    <div class="callout">
+      <span class="mark">!</span>
+      <div>Quick untangle: the <b>product development life cycle</b> (PDLC) is the process of <b>building</b> a product. People also say "product life cycle," which is a different idea about a product aging in the market (introduction, growth, maturity, decline). This page is about building.</div>
+    </div>
+
+    <div class="pipeline" id="pipeline" role="tablist" aria-label="Product development stages"></div>
+
+    <div class="detail" id="detail" role="tabpanel" aria-live="polite"></div>
+  </section>
+
+  <!-- SAMPLE PRD -->
+  <section id="prd">
+    <div class="sec-head">
+      <span class="eyebrow">Part 2 / The document</span>
+      <h2>What "Define" actually produces</h2>
+      <p>The PRD is the deliverable that scares newcomers most, yet it is just a shared agreement on what you are building and why. Here is a short one for guest checkout. Flip the notes on to see what each part is doing.</p>
+    </div>
+    <div class="prd" id="prdDoc">
+      <div class="prd-bar">
+        <span class="file">PRD_guest-checkout.md</span>
+        <span class="meta"><span>Owner: You (PM)</span><span>v0.3</span><span class="status">IN REVIEW</span></span>
+      </div>
+      <div class="prd-toggle-wrap">
+        <button class="prd-toggle" id="prdToggle" aria-pressed="false">Show teaching notes</button>
+      </div>
+      <div class="prd-body">
+        <div class="prd-sec">
+          <div class="h"><span class="num">01</span>&nbsp;&nbsp;Problem</div>
+          <p>60% of shoppers abandon at the "create account" step. Interviews show most only wanted a one-time purchase and saw signup as a roadblock.</p>
+          <div class="note">This comes straight from <b>Discovery</b>. A PRD opens with the real problem, never with the solution.</div>
+        </div>
+        <div class="prd-sec">
+          <div class="h"><span class="num">02</span>&nbsp;&nbsp;Goal &amp; success metric</div>
+          <p>Lift checkout completion rate by <b>15%</b> within 6 weeks of full launch. Guardrails: account signups fall no more than 5%, and fraud does not rise.</p>
+          <div class="note">One clear number the whole feature is judged against. The <b>guardrails</b> name what you refuse to break while chasing it.</div>
+        </div>
+        <div class="prd-sec">
+          <div class="prd-cols">
+            <div class="in">
+              <div class="h">In scope</div>
+              <ul><li>Buy without an account</li><li>Capture email for the receipt</li><li>Offer account creation after purchase</li></ul>
+            </div>
+            <div class="out">
+              <div class="h">Out of scope</div>
+              <ul><li>Saved payment methods</li><li>Order history for guests</li><li>Social login</li></ul>
+            </div>
+          </div>
+          <div class="note">Naming what you will <b>not</b> build is half the value of a PRD. It stops scope creep before it starts.</div>
+        </div>
+        <div class="prd-sec">
+          <div class="h"><span class="num">03</span>&nbsp;&nbsp;User stories</div>
+          <ul><li>As a first-time shopper, I want to buy without making an account so I can finish quickly.</li><li>As a returning buyer, I still want to log in for my saved details.</li></ul>
+          <div class="note">Written from the <b>user's</b> point of view, not the system's. This keeps the team aimed at the person, not the code.</div>
+        </div>
+        <div class="prd-sec">
+          <div class="h"><span class="num">04</span>&nbsp;&nbsp;Open questions</div>
+          <ul><li>What if the guest's email already belongs to an account?</li><li>How are refunds handled with no account to log into?</li></ul>
+          <div class="note">A good PRD admits what is still unknown. Open questions get resolved with design and engineering, not guessed alone.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PM TYPES -->
+  <section id="types">
+    <div class="sec-head">
+      <span class="eyebrow">Part 3 / The people</span>
+      <h2>One title, many flavors</h2>
+      <p>"Product manager" splits into specialties as companies grow. They share the same core job of deciding what to build and why. What changes is the kind of problem they point it at. Tap a card to open it.</p>
+    </div>
+    <div class="grid" id="pmgrid"></div>
+  </section>
+
+  <!-- STAKEHOLDERS -->
+  <section id="team">
+    <div class="sec-head">
+      <span class="eyebrow">Part 4 / The team</span>
+      <h2>A PM sits in the middle</h2>
+      <p>The real surprise for newcomers: the job is mostly people. A PM has almost no direct authority and gets things done through influence. Every one of these relationships runs both ways.</p>
+    </div>
+    <div class="hub-center">
+      <div class="who">You, the PM</div>
+      <div class="sub">connect the dots, hold the "why"</div>
+    </div>
+    <div class="hub" id="hub"></div>
+  </section>
+
+  <!-- WEEK -->
+  <section id="week">
+    <div class="sec-head">
+      <span class="eyebrow">Part 5 / The week</span>
+      <h2>A week in the life</h2>
+      <p>Roughly half the week is recurring team rituals. The rest is deep work: writing, digging through data, and talking to users. Here is one week of a two-week sprint.</p>
+    </div>
+    <div class="daily">
+      <span class="pill">Every day</span>
+      <span><b>Daily standup</b>, about 15 minutes: each person says what they did, what is next, and what is blocking them.</span>
+    </div>
+    <div class="week" id="weekGrid"></div>
+    <div class="week-key">
+      <span class="k"><span class="dot" style="background:var(--s-launch)"></span> Team ritual (recurs every sprint)</span>
+      <span class="k"><span class="dot" style="background:var(--s-define)"></span> Deep work (flexes around it)</span>
+    </div>
+  </section>
+
+  <!-- TOOLBOX -->
+  <section id="tools">
+    <div class="sec-head">
+      <span class="eyebrow">Part 6 / The toolbox</span>
+      <h2>Which tool for which job</h2>
+      <p>You do not need to know these on day one. This is a map of where each tool tends to show up across the life cycle, so the names stop feeling random.</p>
+    </div>
+    <div class="tools" id="toolbox"></div>
+  </section>
+
+  <!-- GLOSSARY -->
+  <section id="glossary">
+    <div class="sec-head">
+      <span class="eyebrow">Part 7 / The jargon</span>
+      <h2>Decode the acronyms</h2>
+      <p>Half the barrier to entry is vocabulary. Search or skim. These are the terms you will hear in your first week.</p>
+    </div>
+    <input class="glass-search" id="glassSearch" type="text" placeholder="Search a term... (try MVP, PRD, churn)" aria-label="Search glossary">
+    <div class="glossary" id="glossaryGrid"></div>
+  </section>
+
+  <!-- BREAK IN -->
+  <section id="breakin">
+    <div class="sec-head">
+      <span class="eyebrow">Part 8 / Getting in</span>
+      <h2>How people actually break in</h2>
+      <p>There is no single door. Most PMs arrive from somewhere adjacent and bring one strength with them. Find the path closest to where you stand today, then start building the skills on the right. Tap a skill to check it off.</p>
+    </div>
+    <div class="breakin">
+      <div class="paths" id="paths"></div>
+      <div class="skills">
+        <h4>Hard skills to start now</h4>
+        <div id="hardSkills"></div>
+        <h4 class="soft">Soft skills to grow</h4>
+        <div id="softSkills"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="fnote">
+      <span class="eyebrow">The part that surprises people</span>
+      <h3>It never actually ends.</h3>
+      <p>Launch is not the finish line. You measure, you learn, the result raises a new question, and you are back at discovery. Good PMs get comfortable with that loop, because that is the job.</p>
+      <div class="steps">
+        <div class="step"><span>01</span>Pick a product you use daily</div>
+        <div class="step"><span>02</span>Find one thing that frustrates you</div>
+        <div class="step"><span>03</span>Walk it through these seven stages</div>
+      </div>
+    </div>
+    <div class="credit">Built as a starting point. Now go break something and fix it.</div>
+  </footer>
+
+</div>
+
+<script>
+  // ---------- DATA: PDLC stages ----------
+  const stages = [
+    {
+      id: "discovery", num: "01", name: "Discovery", color: "var(--s-discovery)",
+      what: "Figure out whether a problem is real and worth solving. Talk to users and dig into data before anyone writes a line of code.",
+      deliverable: "A validated problem + hypothesis", owner: "PM, with research & data",
+      tools: ["User interviews", "Amplitude", "Hotjar", "Dovetail"],
+      example: "Funnel data shows 60% of shoppers quit at the \u201ccreate account\u201d step. You interview a few and hear the same thing: they only wanted to buy one item. Hypothesis: forcing signup is killing sales."
+    },
+    {
+      id: "define", num: "02", name: "Define", color: "var(--s-define)",
+      what: "Decide exactly what you will build and why. Write it down so the whole team shares one understanding of the goal and scope.",
+      deliverable: "A PRD", owner: "PM",
+      tools: ["Notion", "Confluence", "Google Docs", "Productboard"],
+      example: "You write a PRD: let people check out as a guest, no account required. Goal: lift checkout completion by 15%. Out of scope for now: saved cards and order history."
+    },
+    {
+      id: "design", num: "03", name: "Design", color: "var(--s-design)",
+      what: "Turn requirements into something people can see and react to. Map the smooth path and the messy edge cases.",
+      deliverable: "Mockups + a prototype", owner: "Designer, with PM",
+      tools: ["Figma", "FigJam", "Miro"],
+      example: "A designer mocks up the guest checkout screen in Figma, including the tricky parts: where to capture an email for the receipt, and what the user sees if payment fails."
+    },
+    {
+      id: "build", num: "04", name: "Build", color: "var(--s-build)",
+      what: "Break the work into small pieces engineers can ship, then build it in short cycles called sprints.",
+      deliverable: "Working software, in tickets", owner: "Engineering, with PM",
+      tools: ["Linear", "Jira", "GitHub", "Asana"],
+      example: "The work becomes tickets like SHOP-101 (create an order without a user account) and SHOP-102 (build the guest form). Engineers pick them up across two sprints."
+    },
+    {
+      id: "test", num: "05", name: "Test & QA", color: "var(--s-test)",
+      what: "Check that it actually works before real users touch it. Hunt for bugs, broken edge cases, and anything confusing.",
+      deliverable: "A tested, fixed build", owner: "QA, with eng & PM",
+      tools: ["TestRail", "BrowserStack", "Sentry"],
+      example: "QA runs the full flow on different devices and tries to break it: empty cart, declined card, slow network. Two bugs surface and get fixed before launch."
+    },
+    {
+      id: "launch", num: "06", name: "Launch", color: "var(--s-launch)",
+      what: "Release it to users, carefully. Start small so you can catch problems before everyone is affected.",
+      deliverable: "A live feature + release notes", owner: "PM, with engineering",
+      tools: ["LaunchDarkly", "Statsig", "Feature flags"],
+      example: "You turn guest checkout on for 10% of traffic first. The numbers look healthy and nothing breaks, so you roll it out to everyone the next day."
+    },
+    {
+      id: "measure", num: "07", name: "Measure & Iterate", color: "var(--s-measure)",
+      what: "See if it worked against the metric you set, then decide what is next. This is where the loop starts over.",
+      deliverable: "Results + the next hypothesis", owner: "PM, with data",
+      tools: ["Amplitude", "Mixpanel", "Looker", "Metabase"],
+      example: "Checkout completion rose 12%, just short of the 15% goal. You notice the form is still long. That becomes a fresh problem to explore, and you are back at Discovery."
+    }
+  ];
+
+  // ---------- DATA: PM types ----------
+  const pmTypes = [
+    {
+      name: "Core PM", tick: "GENERALIST", color: "var(--s-define)",
+      focus: "Owns a product or feature area end to end, from the problem all the way to launch.",
+      metric: "Whatever moves the product's main goal (activation, retention)",
+      day: "Writing PRDs, running standups, talking to users, ranking the backlog.",
+      skill: "Communication, prioritization, user empathy.",
+      task: "Decide which 3 of 12 requested features ship next quarter, and defend why."
+    },
+    {
+      name: "AI PM", tick: "MODELS", color: "var(--s-design)",
+      focus: "Builds products where the core value comes from AI: assistants, recommendations, agents.",
+      metric: "Output quality + adoption (resolution rate, acceptance rate)",
+      day: "Defining what \u201cgood\u201d means, writing evals, working with data scientists, handling edge cases.",
+      skill: "Comfort with model behavior, evals, and non-determinism.",
+      task: "Define how to measure when a support bot is wrong, and what the acceptable rate is."
+    },
+    {
+      name: "Growth PM", tick: "FUNNEL", color: "var(--s-measure)",
+      focus: "Moves specific numbers across the funnel: acquisition, activation, retention, revenue.",
+      metric: "A funnel metric (signup rate, activation, retention)",
+      day: "Running A/B experiments, reading funnels, smoothing onboarding.",
+      skill: "Experimentation, analytics, a feel for behavior.",
+      task: "Run an A/B test on the signup page aiming to lift conversion by 10%."
+    },
+    {
+      name: "Technical PM", tick: "PLATFORM", color: "var(--s-build)",
+      focus: "Owns technical products: APIs, infrastructure, developer tools, integrations.",
+      metric: "Developer adoption, API reliability and usage",
+      day: "Reading specs, scoping trade-offs with engineers, designing APIs.",
+      skill: "Technical depth and system thinking; talks to engineers as peers.",
+      task: "Decide the rate limits and versioning policy for a new public API."
+    },
+    {
+      name: "Monetization PM", tick: "REVENUE", color: "var(--s-launch)",
+      focus: "Owns how the product makes money: pricing, packaging, billing, paywalls.",
+      metric: "Revenue metrics (ARPU, conversion to paid, LTV)",
+      day: "Designing pricing tiers, running price experiments, studying willingness to pay.",
+      skill: "Business modeling, pricing strategy, data analysis.",
+      task: "Design a 3-tier plan and decide exactly what belongs in the free tier."
+    },
+    {
+      name: "Platform PM", tick: "INTERNAL", color: "var(--s-discovery)",
+      focus: "Builds the internal platforms and shared services other teams build on top of.",
+      metric: "Internal adoption, reuse, time saved for other teams",
+      day: "Gathering needs from internal teams, shipping shared components, juggling dependencies.",
+      skill: "Stakeholder management, abstraction, long-term thinking.",
+      task: "Build a shared design system so feature teams ship UI without reinventing it."
+    }
+  ];
+
+  // ---------- DATA: glossary ----------
+  const glossary = [
+    ["PDLC", "Product Development Life Cycle", "The end-to-end process of building a product, from idea to launch and iteration."],
+    ["PRD", "Product Requirements Document", "The doc that spells out what to build, for whom, and why, before building starts."],
+    ["MVP", "Minimum Viable Product", "The smallest version that delivers real value and tests whether the idea holds up."],
+    ["OKR", "Objectives & Key Results", "A goal-setting framework: one ambition, a few measurable results that prove you hit it."],
+    ["KPI", "Key Performance Indicator", "A metric you watch to judge whether something is working."],
+    ["ICP", "Ideal Customer Profile", "A description of the exact type of customer the product is built for."],
+    ["Backlog", "", "The prioritized list of work that is wanted but not yet done."],
+    ["Sprint", "", "A fixed time box, often two weeks, in which a team completes a chunk of work."],
+    ["A/B test", "", "An experiment that shows two versions to different users to see which performs better."],
+    ["Roadmap", "", "A high-level plan of what is coming and roughly when, kept deliberately flexible."],
+    ["North star", "North Star Metric", "The single number that best captures the value your product delivers to users."],
+    ["User story", "", "A need written from the user's view: \u201cAs a shopper, I want to check out without an account.\u201d"],
+    ["Stakeholder", "", "Anyone with a stake in the product: execs, sales, engineering, support, users."],
+    ["Churn", "", "The rate at which users stop using or paying for the product."],
+    ["Activation", "", "The moment a new user first experiences the product's core value."],
+    ["Scope", "", "The agreed boundary of what a piece of work will and will not include."]
+  ];
+
+  // ---------- RENDER: pipeline ----------
+  const pipeline = document.getElementById("pipeline");
+  const detail = document.getElementById("detail");
+
+  stages.forEach((s, i) => {
+    const b = document.createElement("button");
+    b.className = "node";
+    b.style.setProperty("--c", s.color);
+    b.setAttribute("role", "tab");
+    b.setAttribute("aria-selected", i === 0 ? "true" : "false");
+    b.setAttribute("aria-controls", "detail");
+    b.dataset.idx = i;
+    b.innerHTML = `<span class="n-num">${s.num}</span><span class="n-dot"></span><span class="n-name">${s.name}</span>`;
+    b.addEventListener("click", () => selectStage(i));
+    pipeline.appendChild(b);
+  });
+  const loop = document.createElement("div");
+  loop.className = "loop-back";
+  loop.innerHTML = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v4h4"/></svg> repeats`;
+  pipeline.appendChild(loop);
+
+  function selectStage(i) {
+    const s = stages[i];
+    [...pipeline.querySelectorAll(".node")].forEach((n, j) => n.setAttribute("aria-selected", j === i ? "true" : "false"));
+    detail.style.setProperty("--c", s.color);
+    detail.style.animation = "none";
+    void detail.offsetWidth;
+    detail.style.animation = "";
+    detail.innerHTML = `
+      <div class="d-top">
+        <span class="d-step">STAGE ${s.num}</span>
+        <h3>${s.name}</h3>
+      </div>
+      <p class="d-what">${s.what}</p>
+      <div class="d-meta">
+        <div class="cell"><div class="k">Produces</div><div class="v deliv">${s.deliverable}</div></div>
+        <div class="cell"><div class="k">Who leads</div><div class="v">${s.owner}</div></div>
+        <div class="cell"><div class="k">Typical tools</div><div class="chips">${s.tools.map(t => `<span class="chip">${t}</span>`).join("")}</div></div>
+      </div>
+      <div class="d-example">
+        <span class="ex-label"><span class="pin"></span>Guest checkout, at this stage</span>
+        <p>${s.example}</p>
+      </div>`;
+  }
+  selectStage(0);
+
+  // ---------- RENDER: PM types ----------
+  const pmgrid = document.getElementById("pmgrid");
+  pmTypes.forEach((p) => {
+    const card = document.createElement("button");
+    card.className = "pm";
+    card.style.setProperty("--c", p.color);
+    card.setAttribute("aria-expanded", "false");
+    card.innerHTML = `
+      <div class="pm-top">
+        <span class="pm-name">${p.name}</span>
+        <span class="pm-tick" style="background:${p.color}">${p.tick}</span>
+      </div>
+      <p class="pm-focus">${p.focus}</p>
+      <span class="pm-toggle"><span class="arr">&#9656;</span><span class="tg-text">details</span></span>
+      <div class="pm-body"><div>
+        <div class="row"><div class="k">North star metric</div><div class="v metric">${p.metric}</div></div>
+        <div class="row"><div class="k">A typical day</div><div class="v">${p.day}</div></div>
+        <div class="row"><div class="k">Core skills</div><div class="v">${p.skill}</div></div>
+        <div class="row"><div class="k">Example task</div><div class="v">${p.task}</div></div>
+      </div></div>`;
+    card.addEventListener("click", () => {
+      const open = card.getAttribute("aria-expanded") === "true";
+      card.setAttribute("aria-expanded", open ? "false" : "true");
+      card.querySelector(".tg-text").textContent = open ? "details" : "close";
+    });
+    pmgrid.appendChild(card);
+  });
+
+  // ---------- RENDER: toolbox ----------
+  const toolbox = document.getElementById("toolbox");
+  stages.forEach((s) => {
+    const jobMap = {
+      discovery: "Hear from users, read the data",
+      define: "Write it down, align the team",
+      design: "Make it visible before it is built",
+      build: "Track and ship the work",
+      test: "Catch bugs and watch for errors",
+      launch: "Release safely, in stages",
+      measure: "See what the numbers say"
+    };
+    const row = document.createElement("div");
+    row.className = "tool-row";
+    row.style.setProperty("--c", s.color);
+    row.innerHTML = `
+      <div class="tr-stage">${s.num} &middot; ${s.name}</div>
+      <div class="tr-job">${jobMap[s.id]}</div>
+      <div class="chips">${s.tools.map(t => `<span class="chip">${t}</span>`).join("")}</div>`;
+    toolbox.appendChild(row);
+  });
+
+  // ---------- RENDER: glossary + search ----------
+  const glossaryGrid = document.getElementById("glossaryGrid");
+  const search = document.getElementById("glassSearch");
+
+  function renderGlossary(filter = "") {
+    const q = filter.trim().toLowerCase();
+    const matches = glossary.filter(([term, full, def]) =>
+      term.toLowerCase().includes(q) || full.toLowerCase().includes(q) || def.toLowerCase().includes(q));
+    glossaryGrid.innerHTML = matches.length
+      ? matches.map(([term, full, def]) => `
+          <div class="term">
+            <div class="t-name">${term}</div>
+            ${full ? `<div class="t-full">${full}</div>` : ""}
+            <div class="t-def">${def}</div>
+          </div>`).join("")
+      : `<div class="no-match">No term matches \u201c${filter}\u201d. Try a shorter word.</div>`;
+  }
+  renderGlossary();
+  search.addEventListener("input", (e) => renderGlossary(e.target.value));
+
+  // ---------- PRD teaching notes ----------
+  const prdDoc = document.getElementById("prdDoc");
+  const prdToggle = document.getElementById("prdToggle");
+  prdToggle.addEventListener("click", () => {
+    const on = prdDoc.classList.toggle("show-notes");
+    prdToggle.setAttribute("aria-pressed", on ? "true" : "false");
+    prdToggle.textContent = on ? "Hide teaching notes" : "Show teaching notes";
+  });
+
+  // ---------- RENDER: stakeholder hub ----------
+  const stakeholders = [
+    ["Engineering", "to build it and tell you what is realistic.", "for clear requirements and cover from churn."],
+    ["Design", "to make it usable and worth using.", "for the problem and the constraints, not a solution."],
+    ["Data / Analytics", "for the numbers behind every call.", "for sharp, specific questions."],
+    ["Sales", "for what customers ask for and push back on.", "to know what is shipping, and when."],
+    ["Marketing", "to position and launch it well.", "for the value and the timeline, early."],
+    ["Support", "for what is breaking and frustrating users.", "to fix the top recurring pain."],
+    ["Leadership", "for strategy, priorities, and air cover.", "for honest status and clear trade-offs."]
+  ];
+  const hub = document.getElementById("hub");
+  stakeholders.forEach(([role, need, give]) => {
+    const d = document.createElement("div");
+    d.className = "spoke";
+    d.innerHTML = `<div class="role">${role}</div>
+      <div class="line"><span class="lab">You rely on them</span>${need}</div>
+      <div class="line"><span class="lab">They rely on you</span>${give}</div>`;
+    hub.appendChild(d);
+  });
+
+  // ---------- RENDER: week ----------
+  const weekData = [
+    ["Mon", [["Sprint planning", false], ["Backlog grooming", false], ["Clear overnight blockers", true]]],
+    ["Tue", [["User interviews", true], ["Write / refine the PRD", true], ["Deep work", true]]],
+    ["Wed", [["Design review", false], ["1:1 with your manager", false], ["Stakeholder sync", false]]],
+    ["Thu", [["Check last launch's data", true], ["Unblock engineers", true], ["Deep work", true]]],
+    ["Fri", [["Sprint review / demo", false], ["Retro", false], ["Update the roadmap", true]]]
+  ];
+  const weekGrid = document.getElementById("weekGrid");
+  weekData.forEach(([day, items]) => {
+    const d = document.createElement("div");
+    d.className = "day";
+    d.innerHTML = `<div class="dname">${day}</div>` +
+      items.map(([t, deep]) => `<div class="item ${deep ? "deep" : ""}"><span class="ritual"></span>${t}</div>`).join("");
+    weekGrid.appendChild(d);
+  });
+
+  // ---------- RENDER: break in ----------
+  const paths = [
+    ["From engineering", "You already speak the language. A natural bridge to technical PM."],
+    ["From design", "Strong user empathy and UX instinct already in hand."],
+    ["From marketing or growth", "You know funnels and messaging. Growth PM fits."],
+    ["From support or sales", "You know the customer's pain better than anyone."],
+    ["APM programs", "Structured entry roles built for new grads and switchers."],
+    ["Build something", "Ship a small side project. Now you have a real story to tell."]
+  ];
+  const pathsEl = document.getElementById("paths");
+  paths.forEach(([n, d]) => {
+    const el = document.createElement("div");
+    el.className = "path";
+    el.innerHTML = `<div class="pname">${n}</div><div class="pdesc">${d}</div>`;
+    pathsEl.appendChild(el);
+  });
+
+  const checkSvg = '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>';
+  function renderSkills(targetId, list) {
+    const el = document.getElementById(targetId);
+    list.forEach((s) => {
+      const b = document.createElement("button");
+      b.className = "skill";
+      b.setAttribute("aria-pressed", "false");
+      b.innerHTML = `<span class="box">${checkSvg}</span><span class="txt">${s}</span>`;
+      b.addEventListener("click", () => {
+        const on = b.classList.toggle("on");
+        b.setAttribute("aria-pressed", on ? "true" : "false");
+      });
+      el.appendChild(b);
+    });
+  }
+  renderSkills("hardSkills", ["Write clearly and briefly", "Read data and basic analytics", "Prioritize with a simple framework", "Understand enough tech to talk to engineers"]);
+  renderSkills("softSkills", ["Communicate and align people", "Manage stakeholders", "Say no, with a reason", "Stay genuinely curious about users"]);
+</script>
+
+</body>
+</html>
